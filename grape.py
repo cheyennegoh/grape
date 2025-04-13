@@ -466,7 +466,7 @@ def sensible_initialisation(ind_class, pop_size, bnf_grammar, min_init_depth,
                 genome = []
                 if codon_consumption == 'eager' or codon_consumption == 'lazy':
                     for k in range(len(remainders)):
-                        codon = (random.randint(0,1e10) % math.floor(((codon_size + 1) / possible_choices[k])) * possible_choices[k]) + remainders[k]
+                        codon = (random.randint(0, int(1e10)) % math.floor(((codon_size + 1) / possible_choices[k])) * possible_choices[k]) + remainders[k]
                         genome.append(codon)
                 else:
                     raise ValueError("Unknown mapper")
@@ -527,7 +527,7 @@ def sensible_initialisation(ind_class, pop_size, bnf_grammar, min_init_depth,
             genome = []
             if codon_consumption == 'eager' or codon_consumption == 'lazy':
             	for j in range(len(remainders)):
-            		codon = (random.randint(0,1e10) % math.floor(((codon_size + 1) / possible_choices[j])) * possible_choices[j]) + remainders[j]
+            		codon = (random.randint(0, int(1e10)) % math.floor(((codon_size + 1) / possible_choices[j])) * possible_choices[j]) + remainders[j]
             		genome.append(codon)
             else:
             	raise ValueError("Unknown mapper")
