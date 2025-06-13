@@ -113,10 +113,8 @@ def ge_eaSimpleWithElitism(population, toolbox, cxpb, mutpb, ngen, elite_size,
             logbook.header = ['gen', 'invalid'] + (stats.fields if stats else []) + ['best_ind_length', 'avg_length', 'best_ind_nodes', 'avg_nodes', 'best_ind_depth', 'avg_depth', 'avg_used_codons', 'best_ind_used_codons', 'behavioural_diversity', 'structural_diversity', 'fitness_diversity', 'selection_time', 'generation_time']
 
     start_gen = time.time()        
-    # Evaluate the individuals with an invalid fitness
-    for ind in population:
-        if not ind.fitness.valid:
-            ind.fitness.values = toolbox.evaluate(ind, points_train)
+    # Evaluate entire population
+    toolbox.evaluate(population, points_train)
         
     valid0 = [ind for ind in population if not ind.invalid]
     valid = [ind for ind in valid0 if not math.isnan(ind.fitness.values[0])]
@@ -226,10 +224,8 @@ def ge_eaSimpleWithElitism(population, toolbox, cxpb, mutpb, ngen, elite_size,
                            codon_consumption, genome_representation,
                            max_genome_length)
 
-        # Evaluate the individuals with an invalid fitness
-        for ind in offspring:
-            if not ind.fitness.valid:
-                ind.fitness.values = toolbox.evaluate(ind, points_train)
+        # Evaluate entire population
+        toolbox.evaluate(offspring, points_train)
                 
         #Update population for next generation
         population[:] = offspring
@@ -279,7 +275,7 @@ def ge_eaSimpleWithElitism(population, toolbox, cxpb, mutpb, ngen, elite_size,
                 if gen < ngen:
                     fitness_test = np.NaN
                 else:
-                    fitness_test = toolbox.evaluate(halloffame.items[0], points_test)[0]
+                    fitness_test = toolbox.evaluate([halloffame.items[0]], points_test, False)[0]
             
         length = [len(ind.genome) for ind in valid]
         avg_length = sum(length)/len(length)
